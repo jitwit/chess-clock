@@ -65,7 +65,7 @@ wd 'timer 100'
 
 highlight =: 152 226 245
 half =: 600
-offset =: 155 200
+offset =: 120 190
 NB. ori set by setup form. 0 means flipped (relative to wb times)
 NB. todo: over/make look reasonable
 draw_times =: 3 : 0
@@ -75,7 +75,7 @@ glclear''
 glrgb (-.ori)*255 255 255
 glbrush''
 glrect half * 0 0 1 1
-glfont '"lucide console" 80'
+glfont ('monospace 100' [`,@.(j-:ori) ' bold')
 glrgb ori*255 255 255
 gltextcolor''
 gltextxy offset
@@ -84,6 +84,7 @@ gltext toft 0 { |.^:ori wb
 glrgb ori*255 255 255
 glbrush''
 glrect half * 1 0 1 1
+glfont ('monospace 100' [`,@.(j~:ori) ' bold')
 glrgb (-.ori)*255 255 255
 gltextcolor''
 gltextxy offset + half * 1 0
