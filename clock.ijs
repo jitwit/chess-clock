@@ -11,7 +11,7 @@ loaddefaults =: 3 : 0
  do.   'time step ori' =: ". d
        j =: 0
        last =: __
- else. time =: 15*60
+ else. time =: 15
        step =: 10
        last =: __
        wb =: 2#time
@@ -32,8 +32,9 @@ bump =: 3 : 0
 )
 
 dt =: 3 : 0
- if. STATUS = RUN do. bump (now =. 6!:1 '') - last
-                      last =: now
+ if. STATUS = RUN
+ do. bump (now =. 6!:1 '') - last
+     last =: now
  end.
 )
 
@@ -46,7 +47,7 @@ pause =: 3 : 0
  assert. STATUS = RUN
  now =. 6!:1 ''
  STATUS =: PAUSE
- bump (now - last)
+ bump now - last
 )
 
 resume =: 3 : 0
@@ -69,7 +70,7 @@ loop =: 3 : 0
  select. STATUS
  case. SETUP do. last =: 6!:1 ''
  case. PAUSE do. last =: 6!:1 ''
- case. RUN do. dt''
-               if. +./ 0 >: wb do. STATUS =: OVER end.
+ case. RUN   do. dt ''
+                 if. +./ 0 >: wb do. STATUS =: OVER end.
  case. do. end.
 )
