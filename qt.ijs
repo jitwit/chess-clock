@@ -63,7 +63,7 @@ open_clock =: 3 : 0
 )
 
 half =: 600
-offset =: 120 190
+offset =: 120 190 + (UNAME-:'Darwin') * 30 15
 colorlose =: 245 10 30
 
 NB. left's turn iff ori -: j. so left's lost iff that and status is OVER.
