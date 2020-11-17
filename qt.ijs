@@ -3,18 +3,18 @@ load 'clock.ijs gl2'
 coinsert 'jgl2 clock'
 
 setup_form =: 0 : 0
-pc setup closeok;
-bin v;
-  bin h;
-    cc min edit; set min alignment center; set min text 15; set min wh 30 30;
-    cc time static; set time text "+"; set time wh 10 30;
-    cc sec edit; set sec alignment center; set sec text 10; set sec wh 30 30;
-    cc ws static; set ws text "starts:"; set ws wh 40 30;
-    cc rl combolist; set rl items Right Left;
-  bin z;
-  cc ok button; set ok text ok;
-bin z;
-pshow;
+ pc setup closeok;
+ bin v;
+   bin h;
+     cc min edit; set min alignment center; set min text 15; set min wh 30 30;
+     cc time static; set time text "+"; set time wh 10 30;
+     cc sec edit; set sec alignment center; set sec text 10; set sec wh 30 30;
+     cc ws static; set ws text "white:"; set ws wh 40 30;
+     cc rl combolist; set rl items Right Left;
+   bin z;
+   cc ok button; set ok text ok;
+ bin z;
+ pshow;
 )
 
 setup_close =: 3 : 0
@@ -62,11 +62,9 @@ open_clock =: 3 : 0
  wd 'timer 100'
 )
 
-highlight =: 152 226 245
 half =: 600
 offset =: 120 190
-NB. ori set by setup form. 0 means flipped (relative to wb times)
-NB. todo: over/make look reasonable
+
 draw_times =: 3 : 0
  wd 'psel clock'
  glclear''
@@ -92,6 +90,12 @@ draw_times =: 3 : 0
  glpaint ''
 )
 
+draw =: 3 : 0
+ select. STATUS
+ case. OVER do. echo 'todo' [ draw_times ''
+ case. do.      draw_times '' end.
+)
+
 clock_face_char =: 3 : 0
  select. {.sysdata
  case. ' ' do. if.     STATUS = SETUP do. start  ''
@@ -105,7 +109,7 @@ clock_face_char =: 3 : 0
  case. do. end.
 )
 
-control_loop =: draw_times@loop
+control_loop =: draw@loop
 sys_timer_z_ =: control_loop_base_
 
 setup_close^:(wdisparent'setup')''
