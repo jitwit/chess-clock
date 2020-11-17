@@ -1,7 +1,87 @@
-clear''
-load 'clock.ijs gl2'
-coinsert 'jgl2 clock'
 
+* Chess clock
+
+#+name: clock-interface
+#+begin_src J :session :exports both
+NB. status
+'SETUP RUN PAUSE OVER' =: i. 4
+STATUS =: SETUP NB. start in configuration
+DEFAULTS =: jpath '~temp/chess-clock.txt'
+
+NB. defaults
+loaddefaults =: 3 : 0
+ if. d =. (1!:1 :: 0:) < DEFAULTS
+ do.   'time step ori' =: ". d
+       j =: 0
+       last =: __
+ else. time =: 15
+       step =: 10
+       j =: 0
+       last =: __ end.
+)
+
+savedefaults =: 3 : 0
+ d =. (":time%60),' ',(":step),' ',(":ori)
+ d 1!:2 < DEFAULTS
+)
+
+NB. text of time
+tofn =: ':' , _2 {. '0' , ":
+toft =: [: }. [: ,/ [: tofn"0 [: <. 60 60 #: (0&>.)
+
+bump =: 3 : 0
+ wb =: wb j}~ y-~j{wb
+)
+
+dt =: 3 : 0
+ if. STATUS = RUN
+ do. bump (now =. 6!:1 '') - last
+     last =: now
+ end.
+)
+
+start =: 3 : 0
+ last =: 6!:1 ''
+ STATUS =: RUN
+)
+
+pause =: 3 : 0
+ assert. STATUS = RUN
+ now =. 6!:1 ''
+ STATUS =: PAUSE
+ bump now - last
+)
+
+resume =: 3 : 0
+ if. STATUS = PAUSE
+ do. STATUS =: RUN
+     last =: 6!:1 ''
+ end.
+)
+
+switch =: 3 : 0
+ bump -step
+ j =: -. j
+)
+
+reset =: 3 : 0
+ STATUS =: SETUP
+)
+
+loop =: 3 : 0
+ select. STATUS
+ case. SETUP do. last =: 6!:1 ''
+ case. PAUSE do. last =: 6!:1 ''
+ case. RUN   do. dt ''
+                 if. +./ 0 >: wb do. STATUS =: OVER end.
+ case. do. end.
+)
+#+end_src
+
+* QT ui
+
+#+name: qt-ui
+#+begin_src J :session :exports both
 setup_form =: 0 : 0
  pc setup closeok;
  bin v;
@@ -131,8 +211,20 @@ clock_face_mbmup =: handle_space
 clock_face_mbrup =: handle_p
 
 control_loop =: draw@loop
-sys_timer_z_ =: control_loop_base_
+sys_timer_z_ =: control_loop_chessclock_
 
 setup_close^:(wdisparent'setup')''
 clock_close^:(wdisparent'clock')''
 open_setup ''
+#+end_src
+
+* tangle
+
+
+#+begin_src J :session :tangle chess-clock.ijs :noweb yes
+coclass 'chessclock'
+load 'gl2'
+coinsert 'jgl2 clock'
+<<clock-interface>>
+<<qt-ui>>
+#+end_src
