@@ -4,13 +4,26 @@ NB. status
 coclass 'clock'
 'SETUP RUN PAUSE OVER' =: i. 4
 STATUS =: SETUP NB. start in configuration
+DEFAULTS =: jpath '~temp/chess-clock.txt'
 
-NB. time in seconds
-time =: 15*60
-step =: 10
-last =: __
-wb =: 2#time
-j =: 0
+NB. defaults
+loaddefaults =: 3 : 0
+ d =. (1!:1 :: 0:) < DEFAULTS
+ if. d
+ do.   'time step ori' =: ". d
+       j =: 0
+       last =: __
+ else. time =: 15*60
+       step =: 10
+       last =: __
+       wb =: 2#time
+       j =: 0 end.
+)
+
+savedefaults =: 3 : 0
+ d =. (":time%60),' ',(":step),' ',(":ori)
+ d 1!:2 < DEFAULTS
+)
 
 NB. text of time
 tofn =: ':' , _2 {. '0' , ":
@@ -48,6 +61,10 @@ resume =: 3 : 0
 switch =: 3 : 0
  bump -step
  j =: -. j
+)
+
+reset =: 3 : 0
+ STATUS =: SETUP
 )
 
 loop =: 3 : 0
