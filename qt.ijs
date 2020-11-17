@@ -96,18 +96,43 @@ draw =: 3 : 0
  case. do.      draw_times '' end.
 )
 
-clock_face_char =: 3 : 0
- select. {.sysdata
- case. ' ' do. if.     STATUS = SETUP do. start  ''
-               elseif. STATUS = RUN   do. switch '' end.
- case. 'p' do. if.     STATUS = RUN   do. pause  ''
-               elseif. STATUS = PAUSE do. resume '' end.
- case. 'r' do. reset ''
-               clock_close ''
-               open_setup ''
- case. 'q' do. clock_close ''
+handle_space =: 3 : 0
+ select. STATUS
+ case. SETUP do. start  ''
+ case. RUN   do. switch ''
+ case. PAUSE do. resume ''
  case. do. end.
 )
+
+handle_p =: 3 : 0
+ select. STATUS
+ case. RUN   do. pause ''
+ case. PAUSE do. resume ''
+ case. do. end.
+)
+
+handle_r =: 3 : 0
+ reset ''
+ clock_close ''
+ open_setup ''
+)
+
+handle_q =: 3 : 0
+ clock_close ''
+)
+
+clock_face_char =: 3 : 0
+ select. {.sysdata
+ case. ' ' do. handle_space ''
+ case. 'p' do. handle_p     ''
+ case. 'r' do. handle_r     ''
+ case. 'q' do. handle_q     ''
+ case. do. end.
+)
+
+clock_face_mblup =: handle_space
+clock_face_mbmup =: handle_space
+clock_face_mbrup =: handle_p
 
 control_loop =: draw@loop
 sys_timer_z_ =: control_loop_base_

@@ -1,5 +1,3 @@
-NB. base off? https://www.google.com/search?q=kasparov+deep+blue&tbm=isch&ved=2ahUKEwjEyauv8IftAhUjVd8KHVvJCx8Q2-cCegQIABAA&oq=kasparov+deep+blue&gs_lcp=CgNpbWcQAzICCAAyAggAMgYIABAFEB4yBggAEAUQHjIGCAAQCBAeMgYIABAIEB4yBggAEAgQHjIGCAAQCBAeMgYIABAIEB4yBggAEAgQHjoECAAQQ1C8BVioFGDwFWgAcAB4AIABZIgB2ASSAQM0LjaYAQCgAQGqAQtnd3Mtd2l6LWltZ8ABAQ&sclient=img&ei=mt2yX8SUL6Oq_Qbbkq_4AQ#imgrc=ntcT1cfyeToyyM
-
 NB. status
 coclass 'clock'
 'SETUP RUN PAUSE OVER' =: i. 4
