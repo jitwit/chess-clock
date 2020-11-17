@@ -224,7 +224,7 @@ open_setup ''
 #+begin_src J :session :tangle chess-clock.ijs :noweb yes
 coclass 'chessclock'
 load 'gl2'
-coinsert 'jgl2 clock'
+coinsert 'jgl2'
 <<clock-interface>>
 <<qt-ui>>
 #+end_src

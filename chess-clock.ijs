@@ -1,6 +1,6 @@
 coclass 'chessclock'
 load 'gl2'
-coinsert 'jgl2 clock'
+coinsert 'jgl2'
 NB. status
 'SETUP RUN PAUSE OVER' =: i. 4
 STATUS =: SETUP NB. start in configuration
