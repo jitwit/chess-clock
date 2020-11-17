@@ -1,0 +1,5 @@
+VERSION =: '1.0.0'
+CAPTION =: 'chess clock'
+DESCRIPTION =: 'chess clock'
+FOLDER =: 'games/chess-clock'
+FILES =: 'chess-clock.ijs'

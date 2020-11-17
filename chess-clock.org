@@ -2,7 +2,7 @@
 * Chess clock
 
 #+name: clock-interface
-#+begin_src J :session :exports both
+#+begin_src J :session :exports code
 NB. status
 'SETUP RUN PAUSE OVER' =: i. 4
 STATUS =: SETUP NB. start in configuration
@@ -81,7 +81,7 @@ loop =: 3 : 0
 * QT ui
 
 #+name: qt-ui
-#+begin_src J :session :exports both
+#+begin_src J :session :exports code
 setup_form =: 0 : 0
  pc setup closeok;
  bin v;
@@ -221,7 +221,7 @@ open_setup ''
 * tangle
 
 
-#+begin_src J :session :tangle chess-clock.ijs :noweb yes
+#+begin_src J :session :exports none :tangle chess-clock.ijs :noweb yes
 coclass 'chessclock'
 load 'gl2'
 coinsert 'jgl2'
