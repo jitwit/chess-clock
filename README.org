@@ -1,0 +1,8 @@
+
+Bare-bones digital chess clock. 
+
+Installation form J repl:
+
+#+begin_src J :session :exports both
+install 'git:jitwit/chess-clock@a'
+#+end_src
