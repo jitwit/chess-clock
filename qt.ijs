@@ -59,17 +59,19 @@ clock_close =: 3 : 0
 
 open_clock =: 3 : 0
  wd clock_form
- wd 'timer 100'
+ wd 'timer 50'
 )
 
 half =: 600
 offset =: 120 190
+colorlose =: 245 10 30
 
-draw_times =: 3 : 0
+NB. left's turn iff ori -: j. so left's lost iff that and status is OVER.
+draw =: 3 : 0
  wd 'psel clock'
  glclear''
 
- glrgb (-.ori)*255 255 255
+ glrgb (-.(STATUS=OVER)*.ori-:j) { colorlose,:(-.ori)*255 255 255
  glbrush''
  glrect half * 0 0 1 1
  glfont ('monospace 100' [`,@.(j-:ori) ' bold')
@@ -78,7 +80,7 @@ draw_times =: 3 : 0
  gltextxy offset
  gltext toft 0 { |.^:ori wb
 
- glrgb ori*255 255 255
+ glrgb (-.(STATUS=OVER)*.ori~:j) { colorlose,:ori*255 255 255
  glbrush''
  glrect half * 1 0 1 1
  glfont ('monospace 100' [`,@.(j~:ori) ' bold')
@@ -88,12 +90,6 @@ draw_times =: 3 : 0
  gltext toft 1 { |.^:ori wb
 
  glpaint ''
-)
-
-draw =: 3 : 0
- select. STATUS
- case. OVER do. echo 'todo' [ draw_times ''
- case. do.      draw_times '' end.
 )
 
 handle_space =: 3 : 0

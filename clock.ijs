@@ -25,7 +25,7 @@ savedefaults =: 3 : 0
 
 NB. text of time
 tofn =: ':' , _2 {. '0' , ":
-toft =: [: }. [: ,/ [: tofn"0 [: <. (60 60&#:)
+toft =: [: }. [: ,/ [: tofn"0 [: <. 60 60 #: (0&>.)
 
 bump =: 3 : 0
  wb =: wb j}~ y-~j{wb
