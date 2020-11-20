@@ -90,7 +90,7 @@ setup_form =: 0 : 0
      cc time static; set time text "+"; set time wh 10 30;
      cc sec edit; set sec alignment center; set sec text 10; set sec wh 30 30;
      cc ws static; set ws text "white:"; set ws wh 40 30;
-     cc rl combolist; set rl wh 40 30; set rl items ← →;
+     cc rl combolist; set rl items ← →;
    bin z;
    cc ok button; set ok text ok;
  bin z;

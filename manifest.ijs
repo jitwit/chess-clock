@@ -1,4 +1,4 @@
-VERSION =: '1.0.0'
+VERSION =: '1.0.1'
 CAPTION =: 'chess clock'
 DESCRIPTION =: 'chess clock'
 FOLDER =: 'games/chess-clock'
