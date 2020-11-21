@@ -1,7 +1,6 @@
 coclass 'chessclock'
 load 'gl2'
 coinsert 'jgl2'
-NB. status
 'SETUP RUN PAUSE OVER' =: i. 4
 STATUS =: SETUP NB. start in configuration
 DEFAULTS =: jpath '~temp/chess-clock.txt'
@@ -22,13 +21,13 @@ savedefaults =: 3 : 0
  d =. (":time%60),' ',(":step),' ',(":ori)
  d 1!:2 < DEFAULTS
 )
-
 NB. text of time
 tofn =: ':' , _2 {. '0' , ":
 toft =: [: }. [: ,/ [: tofn"0 [: <. 60 60 #: (0&>.)
 
 bump =: 3 : 0
- wb =: wb j}~ y-~j{wb
+ wb =: (y -~ j{wb) j} wb
+ if. +./ 0 >: wb do. STATUS =: OVER end.
 )
 
 dt =: 3 : 0
@@ -37,8 +36,8 @@ dt =: 3 : 0
      last =: now
  end.
 )
-
 start =: 3 : 0
+ assert. STATUS = SETUP
  last =: 6!:1 ''
  STATUS =: RUN
 )
@@ -51,10 +50,9 @@ pause =: 3 : 0
 )
 
 resume =: 3 : 0
- if. STATUS = PAUSE
- do. STATUS =: RUN
-     last =: 6!:1 ''
- end.
+ assert. STATUS = PAUSE
+ STATUS =: RUN
+ last =: 6!:1 ''
 )
 
 switch =: 3 : 0
@@ -71,9 +69,9 @@ loop =: 3 : 0
  case. SETUP do. last =: 6!:1 ''
  case. PAUSE do. last =: 6!:1 ''
  case. RUN   do. dt ''
-                 if. +./ 0 >: wb do. STATUS =: OVER end.
  case. do. end.
 )
+
 setup_form =: 0 : 0
  pc setup closeok;
  bin v;
@@ -106,7 +104,7 @@ setup_ok_button =: 3 : 0
  time =: 60 * ". wd'get min text'
  step =: ". wd'get sec text'
  wb =: 2#time
- ori =: (,'→') -: wd 'get rl text'
+ ori =: '→' -: wd 'get rl text'
  j =: 0
  savedefaults ''
  setup_close ''
@@ -114,7 +112,6 @@ setup_ok_button =: 3 : 0
 )
 
 setup_min_button =: setup_sec_button =: setup_ok_button
-
 clock_form =: 0 : 0
  pc clock escclose;
  minwh 1200 600;
@@ -134,6 +131,18 @@ open_clock =: 3 : 0
  wd 'timer 50'
 )
 
+clock_face_char =: 3 : 0
+ select. {.sysdata
+ case. ' ' do. handle_space ''
+ case. 'p' do. handle_p     ''
+ case. 'r' do. handle_r     ''
+ case. 'q' do. handle_q     ''
+ case. do. end.
+)
+
+clock_face_mblup =: handle_space
+clock_face_mbmup =: handle_space
+clock_face_mbrup =: handle_p
 half =: 600
 offset =: 120 190 + (UNAME-:'Darwin') * 30 15
 colorlose =: 245 10 30
@@ -163,7 +172,6 @@ draw =: 3 : 0
 
  glpaint ''
 )
-
 handle_space =: 3 : 0
  select. STATUS
  case. SETUP do. start  ''
@@ -188,20 +196,6 @@ handle_r =: 3 : 0
 handle_q =: 3 : 0
  clock_close ''
 )
-
-clock_face_char =: 3 : 0
- select. {.sysdata
- case. ' ' do. handle_space ''
- case. 'p' do. handle_p     ''
- case. 'r' do. handle_r     ''
- case. 'q' do. handle_q     ''
- case. do. end.
-)
-
-clock_face_mblup =: handle_space
-clock_face_mbmup =: handle_space
-clock_face_mbrup =: handle_p
-
 control_loop =: draw@loop
 sys_timer_z_ =: control_loop_chessclock_
 
