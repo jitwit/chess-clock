@@ -106,7 +106,7 @@ setup_ok_button =: 3 : 0
  time =: 60 * ". wd'get min text'
  step =: ". wd'get sec text'
  wb =: 2#time
- ori =: 'Right' -: wd 'get rl text'
+ ori =: (,'→') -: wd 'get rl text'
  j =: 0
  savedefaults ''
  setup_close ''
