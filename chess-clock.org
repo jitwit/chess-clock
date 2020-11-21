@@ -241,16 +241,18 @@ handle_q =: 3 : 0
 )
 #+end_src
 
-*** 3 2 1 go
+*** allez
 
 #+name: allez
 #+begin_src J :session :exports both
+3 : 0 ^: IFQT ''
 control_loop =: draw@loop
 sys_timer_z_ =: control_loop_chessclock_
 
 setup_close^:(wdisparent'setup')''
 clock_close^:(wdisparent'clock')''
 open_setup ''
+)
 #+end_src
 
 * tangle
@@ -268,5 +270,6 @@ coinsert 'jgl2'
 <<qt-clock>>
 <<drawing>>
 <<handlers>>
+
 <<allez>>
 #+end_src

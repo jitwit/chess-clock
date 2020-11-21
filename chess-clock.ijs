@@ -196,9 +196,12 @@ handle_r =: 3 : 0
 handle_q =: 3 : 0
  clock_close ''
 )
+
+3 : 0 ^: IFQT ''
 control_loop =: draw@loop
 sys_timer_z_ =: control_loop_chessclock_
 
 setup_close^:(wdisparent'setup')''
 clock_close^:(wdisparent'clock')''
 open_setup ''
+)
