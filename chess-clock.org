@@ -13,6 +13,7 @@ NB. defaults
 loaddefaults =: 3 : 0
  if. d =. (1!:1 :: 0:) < DEFAULTS
  do.   'time step ori' =: ". d
+       ori =: -. ori
        j =: 0
        last =: __
  else. time =: 15
